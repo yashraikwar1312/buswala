@@ -31,6 +31,10 @@ const playlists = {
   busWala: {
     id: 'PL0umg_TNpoZTTdZVIi5tfX69pRmoMFGna',
     label: 'Bus Wala Playlist'
+  },
+  love: {
+    id: 'PL3-sRm8xAzY8LhlTyJ2uf-EcQSm_vzSqw',
+    label: 'Love Playlist'
   }
 };
 
