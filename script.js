@@ -1,7 +1,11 @@
 const images = [
   'background-image/bg1.png',
   'background-image/bg2.jpeg',
-  'background-image/bg3.jpeg'
+  'background-image/bg3.jpeg',
+  'background-image/4011087179538207.jpeg',
+  'background-image/7388786884697592.jpeg',
+  'background-image/Mountain Gazer in Anime Style.jpeg',
+  'background-image/tangled movie.jpeg'
 ];
 
 function setRandomBackground(){
