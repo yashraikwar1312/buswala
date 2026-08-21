@@ -39,6 +39,24 @@ const playlists = {
   drZeusKangna: {
     id: 'ua_jvj9dZJQ',
     label: 'Dr Zeus Kangna'
+  },
+  rajasthaniBanger: {
+    id: '04ygfVQjMxY',
+    label: 'Rajasthani Banger',
+    type: 'video'
+  },
+  saiAbhyankar: {
+    id: 'PLnO8uDr9uT6Elyipct9SiAXh2s_SfHshD',
+    label: 'Sai Abhyankar'
+  },
+  olivia: {
+    id: 'PLNE0tq7X_7rNvN1BihL2Dyd5UMJdmxXrV',
+    label: 'Olivia Playlist'
+  },
+  southIndianBanger: {
+    id: 'JgO5ly6YvGI',
+    label: 'South indian Banger',
+    type: 'video'
   }
 };
 
@@ -87,6 +105,16 @@ function loadSelectedPlaylist(){
   try {
     player.stopVideo();
   } catch (e) {}
+
+  const selected = Object.values(playlists).find(item => item.id === playlistId && item.type === 'video') || null;
+
+  if (selected) {
+    player.loadVideoById({videoId: selected.id});
+    playlist = [selected.id];
+    updateTitle();
+    setThumbnailByVideoId(selected.id);
+    return;
+  }
 
   player.loadPlaylist({list: playlistId, listType: 'playlist', index: 0});
 
