@@ -35,6 +35,10 @@ const playlists = {
   love: {
     id: 'PL3-sRm8xAzY8LhlTyJ2uf-EcQSm_vzSqw',
     label: 'Love Playlist'
+  },
+  drZeusKangna: {
+    id: 'ua_jvj9dZJQ',
+    label: 'Dr Zeus Kangna'
   }
 };
 
