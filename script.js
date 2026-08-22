@@ -42,7 +42,8 @@ const playlists = {
   },
   drZeusKangna: {
     id: 'ua_jvj9dZJQ',
-    label: 'Dr Zeus Kangna'
+    label: 'Dr Zeus Kangna',
+    type: 'video'
   },
   rajasthaniBanger: {
     id: '04ygfVQjMxY',
