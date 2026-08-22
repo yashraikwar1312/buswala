@@ -60,6 +60,7 @@ const songCodeFile = document.getElementById('songCodeFile');
 const scanUploadStatus = document.getElementById('scanUploadStatus');
 const moreOptionsButton = document.getElementById('moreOptionsButton');
 const quickOptions = document.getElementById('quickOptions');
+const playlistPickerWrap = document.querySelector('.playlist-picker-wrap');
 const chooseCodeOption = document.getElementById('chooseCodeOption');
 const switchViewOption = document.getElementById('switchViewOption');
 const secondView = document.getElementById('secondView');
@@ -287,17 +288,23 @@ scanmeButton.addEventListener('click', () => {
   songCodeFile.click();
 });
 songCodeFile.addEventListener('change', event => handleSongCodeFile(event.target.files[0]));
+function closeQuickOptions(){
+  quickOptions.hidden = true;
+  playlistPickerWrap.classList.remove('options-open');
+  moreOptionsButton.setAttribute('aria-expanded', 'false');
+}
 moreOptionsButton.addEventListener('click', () => {
-  quickOptions.hidden = !quickOptions.hidden;
-  moreOptionsButton.setAttribute('aria-expanded', String(!quickOptions.hidden));
+  const shouldOpen = quickOptions.hidden;
+  quickOptions.hidden = !shouldOpen;
+  playlistPickerWrap.classList.toggle('options-open', shouldOpen);
+  moreOptionsButton.setAttribute('aria-expanded', String(shouldOpen));
 });
 switchViewOption.addEventListener('click', () => {
   const showingSecondView = secondView.hidden;
   secondView.hidden = !showingSecondView;
   document.querySelector('.bottom-player').hidden = showingSecondView;
   switchViewOption.textContent = showingSecondView ? 'Back to player' : 'Switch player view';
-  quickOptions.hidden = true;
-  moreOptionsButton.setAttribute('aria-expanded', 'false');
+  closeQuickOptions();
 });
 document.querySelectorAll('[data-player-action]').forEach(button => {
   button.addEventListener('click', () => {
@@ -317,8 +324,7 @@ secondView.addEventListener('click', event => {
   }
 });
 chooseCodeOption.addEventListener('click', () => {
-  quickOptions.hidden = true;
-  moreOptionsButton.setAttribute('aria-expanded', 'false');
+  closeQuickOptions();
   songCodeFile.click();
 });
 
