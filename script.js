@@ -272,9 +272,9 @@ async function handleSongCodeFile(file){
 }
 
 scanmeButton.addEventListener('click', () => {
-  const isOpen = !scanUploadPanel.hidden;
-  scanUploadPanel.hidden = isOpen;
-  scanmeButton.setAttribute('aria-expanded', String(!isOpen));
+  scanUploadPanel.hidden = false;
+  scanmeButton.setAttribute('aria-expanded', 'true');
+  songCodeFile.click();
 });
 songCodeFile.addEventListener('change', event => handleSongCodeFile(event.target.files[0]));
 
