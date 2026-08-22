@@ -80,6 +80,7 @@ const progressBar = document.getElementById('progressBar');
 const currentTimeEl = document.getElementById('currentTime');
 const durationEl = document.getElementById('duration');
 const artEl = document.querySelector('.art');
+const songCodeEl = document.getElementById('songCode');
 
 let player;
 let playlist = [];
@@ -210,6 +211,7 @@ function updateTitle(){
 
 function setThumbnailByVideoId(id){
   if(!artEl) return;
+  updateSongCode(id);
   // prefer high quality thumbnail, fallback to hqdefault
   const urls = [
     `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
@@ -220,6 +222,24 @@ function setThumbnailByVideoId(id){
   artEl.style.backgroundImage = `url('${urls[0]}')`;
   // also set backgroundImage to the fallback after a short delay if first 404s (best-effort)
   setTimeout(()=>{ artEl.style.backgroundImage = `url('${urls[2]}')`; }, 500);
+}
+
+function updateSongCode(id){
+  if(!songCodeEl || !id) return;
+  let seed = 0;
+  for(let i=0;i<id.length;i++) seed = (seed * 31 + id.charCodeAt(i)) >>> 0;
+  songCodeEl.replaceChildren();
+  for(let i=0;i<34;i++){
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    const bar = document.createElement('span');
+    bar.className = 'song-code-bar';
+    bar.style.height = `${12 + (seed % 27)}px`;
+    songCodeEl.appendChild(bar);
+  }
+  const logo = document.createElement('span');
+  logo.className = 'song-code-logo';
+  logo.setAttribute('aria-hidden', 'true');
+  songCodeEl.insertBefore(logo, songCodeEl.children[Math.floor(songCodeEl.children.length / 2)]);
 }
 
 playPauseBtn.addEventListener('click', ()=>{
