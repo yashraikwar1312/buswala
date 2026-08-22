@@ -68,6 +68,13 @@ body{
   pointer-events:none;
 }
 .scanme-badge img{width:100%;height:100%;display:block;object-fit:cover;border-radius:9px}
+.more-options{position:absolute;right:4px;bottom:calc(100% + 78px);width:30px;height:30px;padding:4px;border:1px solid rgba(255,255,255,0.55);border-radius:50%;background:rgba(0,0,0,0.72);box-shadow:0 6px 16px rgba(0,0,0,0.35);cursor:pointer;transition:transform .2s ease,background .2s ease}
+.more-options img{width:100%;height:100%;display:block;object-fit:cover;border-radius:50%}
+.more-options:hover,.more-options:focus-visible{transform:scale(1.08);background:rgba(255,255,255,0.18);outline:none}
+.quick-options{position:absolute;right:0;bottom:calc(100% + 114px);padding:5px;border:1px solid rgba(255,255,255,0.22);border-radius:10px;background:rgba(0,0,0,0.82);box-shadow:0 10px 24px rgba(0,0,0,0.4);animation:panel-in .2s ease-out}
+.quick-options[hidden]{display:none}
+.quick-options button{border:0;border-radius:7px;padding:7px 10px;white-space:nowrap;color:#fff;background:rgba(255,255,255,0.12);font:600 11px Poppins,sans-serif;cursor:pointer}
+.quick-options button:hover{background:rgba(255,255,255,0.24)}
 .scan-upload-panel{position:absolute;right:0;bottom:calc(100% + 78px);width:190px;padding:12px;border:1px solid rgba(255,255,255,0.22);border-radius:14px;background:rgba(0,0,0,0.78);box-shadow:0 12px 30px rgba(0,0,0,0.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:panel-in .2s ease-out}
 .scan-upload-panel[hidden]{display:none}
 .scan-upload-panel strong{display:block;margin-bottom:8px;color:#fff;font-size:13px}

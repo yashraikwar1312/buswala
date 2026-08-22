@@ -58,6 +58,9 @@ const scanmeButton = document.getElementById('scanmeButton');
 const scanUploadPanel = document.getElementById('scanUploadPanel');
 const songCodeFile = document.getElementById('songCodeFile');
 const scanUploadStatus = document.getElementById('scanUploadStatus');
+const moreOptionsButton = document.getElementById('moreOptionsButton');
+const quickOptions = document.getElementById('quickOptions');
+const chooseCodeOption = document.getElementById('chooseCodeOption');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -277,6 +280,15 @@ scanmeButton.addEventListener('click', () => {
   songCodeFile.click();
 });
 songCodeFile.addEventListener('change', event => handleSongCodeFile(event.target.files[0]));
+moreOptionsButton.addEventListener('click', () => {
+  quickOptions.hidden = !quickOptions.hidden;
+  moreOptionsButton.setAttribute('aria-expanded', String(!quickOptions.hidden));
+});
+chooseCodeOption.addEventListener('click', () => {
+  quickOptions.hidden = true;
+  moreOptionsButton.setAttribute('aria-expanded', 'false');
+  songCodeFile.click();
+});
 
 playPauseBtn.addEventListener('click', ()=>{
   if(!player) return;
