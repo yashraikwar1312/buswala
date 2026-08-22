@@ -16,6 +16,15 @@
   </header>
 
   <div class="playlist-picker-wrap" aria-label="Playlist selector">
+    <button id="scanmeButton" class="scanme-badge" type="button" aria-label="Upload a song barcode" aria-expanded="false">
+      <img src="scanme-icon/car sticker qr code _ Do Not Scan_ Disappointing Qr Code Sticker.jpeg" alt="Scan me">
+    </button>
+    <div id="scanUploadPanel" class="scan-upload-panel" hidden>
+      <strong>Play from code</strong>
+      <label class="upload-action" for="songCodeFile">Choose barcode file</label>
+      <input id="songCodeFile" type="file" accept="image/*,.txt,.json">
+      <span id="scanUploadStatus" role="status">Upload a code image or text file.</span>
+    </div>
     <div class="playlist-picker">
       <div class="playlist-icon" aria-hidden="true"></div>
       <label class="visually-hidden" for="playlistSelect">Choose playlist</label>

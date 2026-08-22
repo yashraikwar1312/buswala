@@ -1,18 +1,4 @@
-const images = [
-  'background-image/bg1.png',
-  'background-image/bg2.jpeg',
-  'background-image/bg3.jpeg',
-  'background-image/4011087179538207.jpeg',
-  'background-image/7388786884697592.jpeg',
-  'background-image/Mountain Gazer in Anime Style.jpeg',
-  'background-image/tangled movie.jpeg'
-];
-
-function setRandomBackground(){
-  const choice = images[Math.floor(Math.random()*images.length)];
-  document.body.style.backgroundImage = `url("${choice}")`;
-}
-setRandomBackground();
+document.body.style.backgroundImage = 'url("background-image/bg1.png")';
 
 const dtEl = document.getElementById('datetime');
 function updateDateTime(){
@@ -68,6 +54,10 @@ const playlists = {
 let playlistId = playlists.kk.id;
 
 const playlistSelect = document.getElementById('playlistSelect');
+const scanmeButton = document.getElementById('scanmeButton');
+const scanUploadPanel = document.getElementById('scanUploadPanel');
+const songCodeFile = document.getElementById('songCodeFile');
+const scanUploadStatus = document.getElementById('scanUploadStatus');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -241,6 +231,52 @@ function updateSongCode(id){
   logo.setAttribute('aria-hidden', 'true');
   songCodeEl.insertBefore(logo, songCodeEl.children[Math.floor(songCodeEl.children.length / 2)]);
 }
+
+function extractVideoId(value){
+  const match = String(value).match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})|^([\w-]{11})$/);
+  return match ? (match[1] || match[2]) : null;
+}
+
+function playUploadedVideo(videoId){
+  if(!player){
+    scanUploadStatus.textContent = 'Player is still loading. Try again in a moment.';
+    return;
+  }
+  playlistId = videoId;
+  playlist = [videoId];
+  player.loadVideoById({videoId});
+  setThumbnailByVideoId(videoId);
+  scanUploadStatus.textContent = 'Code loaded. Press play to listen.';
+}
+
+async function handleSongCodeFile(file){
+  if(!file) return;
+  scanUploadStatus.textContent = 'Reading code...';
+  if(file.type === 'text/plain' || file.name.endsWith('.json')){
+    const videoId = extractVideoId(await file.text());
+    if(videoId) playUploadedVideo(videoId);
+    else scanUploadStatus.textContent = 'No YouTube song ID found in that file.';
+    return;
+  }
+  if('BarcodeDetector' in window){
+    try{
+      const detector = new BarcodeDetector({formats:['qr_code','code_128','code_39','ean_13']});
+      const results = await detector.detect(await createImageBitmap(file));
+      const videoId = results.map(result => extractVideoId(result.rawValue)).find(Boolean);
+      if(videoId) playUploadedVideo(videoId);
+      else scanUploadStatus.textContent = 'No supported song code found in that image.';
+      return;
+    }catch(e){}
+  }
+  scanUploadStatus.textContent = 'Image selected. This browser cannot decode barcode images.';
+}
+
+scanmeButton.addEventListener('click', () => {
+  const isOpen = !scanUploadPanel.hidden;
+  scanUploadPanel.hidden = isOpen;
+  scanmeButton.setAttribute('aria-expanded', String(!isOpen));
+});
+songCodeFile.addEventListener('change', event => handleSongCodeFile(event.target.files[0]));
 
 playPauseBtn.addEventListener('click', ()=>{
   if(!player) return;
