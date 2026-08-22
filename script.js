@@ -48,6 +48,11 @@ const playlists = {
     id: 'JgO5ly6YvGI',
     label: 'South indian Banger',
     type: 'video'
+  },
+  kishorKumar: {
+    id: 'ebw1zHtleFY',
+    label: 'Kishor Kumar',
+    type: 'video'
   }
 };
 
