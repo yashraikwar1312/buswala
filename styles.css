@@ -185,7 +185,7 @@ body{
 }
 .meta{flex:1;display:flex;flex-direction:column;gap:12px}
 .track-title{font-size:18px;font-weight:700}
-.song-code{height:36px;display:flex;align-items:center;align-self:flex-start;gap:3px;overflow:hidden;width:max-content;max-width:100%;box-sizing:border-box;padding:0 8px;border-radius:18px;background:rgba(0,0,0,0.28)}
+.song-code{height:36px;display:flex;align-items:center;align-self:flex-start;margin-left:18px;gap:3px;overflow:hidden;width:max-content;max-width:calc(100% - 18px);box-sizing:border-box;padding:0 8px;border-radius:18px;background:rgba(0,0,0,0.28)}
 .song-code-bar{width:3px;min-width:3px;background:#fff;border-radius:999px;opacity:.94}
 .song-code-logo{width:34px;height:34px;min-width:34px;margin:0 5px;border:2px solid #000;border-radius:50%;background:#000 url('web-logo/download.jpeg') center 48% / 190% auto no-repeat;box-shadow:0 0 0 2px #fff}
 .controls{display:flex;gap:10px;align-items:center}
