@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" overflow="visible"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 720 1024"
+     width="720" height="1024"
+     role="img"
+     aria-labelledby="player-title player-desc">
+  <title id="player-title">Dripping Music Video Player</title>
+  <desc id="player-desc">A dark rounded music player with a video thumbnail, dynamic title, progress bar, playback controls and options.</desc>
+
+  <defs>
+    <clipPath id="screenClip">
+      <rect x="110" y="80" width="500" height="360" rx="24"/>
+    </clipPath>
+
+    <linearGradient id="bodyGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4b4b4b"/>
+      <stop offset="100%" stop-color="#3e3e3e"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-opacity=".22"/>
+    </filter>
+  </defs>
+
+  <!-- Main player body -->
+  <g id="music-player" filter="url(#shadow)">
+    <path fill="url(#bodyGradient)" d="
+      M145 40
+      H575
+      C620 40 640 64 640 108
+      V650
+      C640 690 620 715 584 720
+      C558 724 544 742 540 770
+      C536 804 518 838 494 838
+      C470 838 461 815 460 778
+      C459 748 447 732 430 732
+      C410 732 400 748 397 777
+      C393 818 376 852 354 852
+      C331 852 318 822 317 782
+      C316 748 302 732 283 732
+      C263 732 250 748 246 777
+      C242 817 224 839 201 839
+      C178 839 164 812 160 776
+      C157 747 143 728 116 723
+      C79 716 80 684 80 650
+      V108
+      C80 64 100 40 145 40 Z"/>
+
+    <!-- Video thumbnail -->
+    <rect x="110" y="80" width="500" height="360" rx="24" fill="#181818"/>
+    <image id="video-thumbnail"
+           x="110" y="80" width="500" height="360"
+           preserveAspectRatio="xMidYMid slice"
+           href=""
+           xlink:href=""
+           clip-path="url(#screenClip)"/>
+
+    <!-- Fallback screen if no thumbnail is supplied -->
+    <g id="thumbnail-placeholder">
+      <rect x="110" y="80" width="500" height="360" rx="24" fill="#181818"/>
+      <circle cx="360" cy="260" r="48" fill="#2b2b2b"/>
+      <path d="M348 233 L348 287 L392 260 Z" fill="#f4f4f4"/>
+    </g>
+
+    <!-- Dynamic video title -->
+    <text id="video-title"
+          x="110" y="482"
+          fill="#f1f1f1"
+          font-family="Inter, Arial, Helvetica, sans-serif"
+          font-size="20"
+          font-weight="500"
+          dominant-baseline="middle">
+      Video Title
+    </text>
+
+    <!-- More/options -->
+    <g id="options" transform="translate(610 466)" fill="#d0d0d0">
+      <circle cx="0" cy="0" r="3.5"/>
+      <circle cx="0" cy="12" r="3.5"/>
+      <circle cx="0" cy="24" r="3.5"/>
+    </g>
+
+    <!-- Progress track -->
+    <g id="progress">
+      <rect x="110" y="520" width="500" height="5" rx="2.5" fill="#777"/>
+      <rect id="progress-fill" x="110" y="520" width="165" height="5" rx="2.5" fill="#f2f2f2"/>
+      <circle id="progress-thumb" cx="275" cy="522.5" r="7" fill="#f2f2f2"/>
+    </g>
+
+    <!-- Time -->
+    <text id="current-time"
+          x="110" y="555"
+          fill="#cfcfcf"
+          font-family="Inter, Arial, Helvetica, sans-serif"
+          font-size="15">0:00</text>
+
+    <text id="remaining-time"
+          x="610" y="555"
+          text-anchor="end"
+          fill="#cfcfcf"
+          font-family="Inter, Arial, Helvetica, sans-serif"
+          font-size="15">-3:22</text>
+
+    <!-- Playback controls -->
+    <g id="playback-controls"
+       fill="#f3f3f3"
+       stroke="#f3f3f3"
+       stroke-linejoin="round"
+       stroke-linecap="round">
+
+      <!-- Previous -->
+      <g id="previous" transform="translate(255 605)">
+        <path d="M-25 -18 L-25 18 L-1 0 Z" fill="none" stroke-width="0"/>
+        <path d="M-1 -18 L-1 18 L24 0 Z" fill="none" stroke-width="0"/>
+        <rect x="-30" y="-18" width="5" height="36" rx="2.5"/>
+      </g>
+
+      <!-- Pause -->
+      <g id="pause" transform="translate(360 605)">
+        <rect x="-17" y="-22" width="12" height="44" rx="4"/>
+        <rect x="5" y="-22" width="12" height="44" rx="4"/>
+      </g>
+
+      <!-- Next -->
+      <g id="next" transform="translate(465 605)">
+        <path d="M25 -18 L25 18 L1 0 Z"/>
+        <path d="M1 -18 L1 18 L-24 0 Z"/>
+        <rect x="25" y="-18" width="5" height="36" rx="2.5"/>
+      </g>
+    </g>
+
+    <!-- Secondary options row: shuffle / repeat / like -->
+    <g id="secondary-options"
+       transform="translate(360 680)"
+       fill="none"
+       stroke="#bdbdbd"
+       stroke-width="3"
+       stroke-linecap="round"
+       stroke-linejoin="round">
+
+      <!-- Shuffle -->
+      <g id="shuffle" transform="translate(-150 0)">
+        <path d="M-13 -8 C-4 -8 2 8 13 8"/>
+        <path d="M8 3 L13 8 L8 13"/>
+        <path d="M-13 8 C-5 8 -3 0 2 -4"/>
+        <path d="M8 -13 L13 -8 L8 -3"/>
+      </g>
+
+      <!-- Heart -->
+      <g id="like" transform="translate(0 0)">
+        <path d="M0 14 L-17 -3 C-27 -13 -20 -27 -9 -27 C-3 -27 0 -23 0 -19 C0 -23 3 -27 9 -27 C20 -27 27 -13 17 -3 Z"/>
+      </g>
+
+      <!-- Repeat -->
+      <g id="repeat" transform="translate(150 0)">
+        <path d="M-14 -7 H12 L7 -12"/>
+        <path d="M14 7 H-12 L-7 12"/>
+        <path d="M-14 -7 C-14 -16 -7 -19 0 -19 H8"/>
+        <path d="M14 7 C14 16 7 19 0 19 H-8"/>
+      </g>
+    </g>
+  </g>
+
+  <!--
+    Dynamic integration notes:
+    1. Set #video-title textContent to the current video's title.
+    2. Set #video-thumbnail href/xlink:href to the current video's thumbnail URL.
+    3. Update #progress-fill width and #progress-thumb cx as playback changes.
+    4. Update #current-time and #remaining-time text.
+    5. Hide #thumbnail-placeholder once a thumbnail is loaded.
+    6. No volume slider is included by design.
+  -->
+</svg>

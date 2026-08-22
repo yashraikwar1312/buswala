@@ -68,6 +68,7 @@ const secondTrackTitle = document.getElementById('secondTrackTitle');
 const secondCurrentTime = document.getElementById('secondCurrentTime');
 const secondDuration = document.getElementById('secondDuration');
 const secondProgressBar = document.getElementById('secondProgressBar');
+const secondThumbnail = document.getElementById('secondThumbnail');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -221,6 +222,10 @@ function setThumbnailByVideoId(id){
   ];
   // try each url by setting it; browser will show best available
   artEl.style.backgroundImage = `url('${urls[0]}')`;
+  if(secondThumbnail){
+    secondThumbnail.src = urls[0];
+    secondThumbnail.onerror = () => { secondThumbnail.src = urls[2]; };
+  }
   // also set backgroundImage to the fallback after a short delay if first 404s (best-effort)
   setTimeout(()=>{ artEl.style.backgroundImage = `url('${urls[2]}')`; }, 500);
 }
