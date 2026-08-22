@@ -21,6 +21,7 @@
     </button>
     <div id="quickOptions" class="quick-options" hidden>
       <button id="chooseCodeOption" type="button">Upload song code</button>
+      <button id="switchViewOption" type="button">Switch player view</button>
     </div>
     <button id="scanmeButton" class="scanme-badge" type="button" aria-label="Upload a song barcode" aria-expanded="false">
       <img src="scanme-icon/car sticker qr code _ Do Not Scan_ Disappointing Qr Code Sticker.jpeg" alt="Scan me">
@@ -88,6 +89,28 @@
       </div>
     </div>
   </div>
+
+  <section id="secondView" class="second-view" hidden aria-label="Alternative music player view">
+    <div class="second-device">
+      <div class="second-screen">
+        <img src="components-2nd view/download (1).jpeg" alt="Current song artwork">
+      </div>
+      <div class="second-device-title" id="secondTrackTitle">Loading...</div>
+      <div class="second-progress">
+        <span id="secondCurrentTime">0:00</span>
+        <div class="second-progress-track"><div id="secondProgressBar"></div></div>
+        <span id="secondDuration">0:00</span>
+      </div>
+      <div class="second-controls" aria-label="Player controls">
+        <button class="second-control" data-player-action="prev" aria-label="Previous track">|&lt;</button>
+        <button class="second-control" data-player-action="replay" aria-label="Replay">&#8634;</button>
+        <button class="second-control second-play" data-player-action="play" aria-label="Play or pause">&#9654;</button>
+        <button class="second-control" data-player-action="next" aria-label="Next track">&gt;|</button>
+        <button class="second-control" data-player-action="shuffle" aria-label="Shuffle">&#8646;</button>
+        <button class="second-control" data-player-action="loop" aria-label="Loop">&#8734;</button>
+      </div>
+    </div>
+  </section>
 
   <audio id="audio"></audio>
   <div id="yt-player" style="position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none"></div>

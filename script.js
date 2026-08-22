@@ -61,6 +61,12 @@ const scanUploadStatus = document.getElementById('scanUploadStatus');
 const moreOptionsButton = document.getElementById('moreOptionsButton');
 const quickOptions = document.getElementById('quickOptions');
 const chooseCodeOption = document.getElementById('chooseCodeOption');
+const switchViewOption = document.getElementById('switchViewOption');
+const secondView = document.getElementById('secondView');
+const secondTrackTitle = document.getElementById('secondTrackTitle');
+const secondCurrentTime = document.getElementById('secondCurrentTime');
+const secondDuration = document.getElementById('secondDuration');
+const secondProgressBar = document.getElementById('secondProgressBar');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -194,6 +200,7 @@ function updateTitle(){
   const videoData = player.getVideoData && player.getVideoData();
   const title = (videoData && videoData.title) ? videoData.title : `Video ${idx+1}`;
   titleEl.textContent = title;
+  secondTrackTitle.textContent = title;
   updateMediaSession();
   // update thumbnail for current video
   try{
@@ -284,6 +291,31 @@ moreOptionsButton.addEventListener('click', () => {
   quickOptions.hidden = !quickOptions.hidden;
   moreOptionsButton.setAttribute('aria-expanded', String(!quickOptions.hidden));
 });
+switchViewOption.addEventListener('click', () => {
+  const showingSecondView = secondView.hidden;
+  secondView.hidden = !showingSecondView;
+  document.querySelector('.bottom-player').hidden = showingSecondView;
+  switchViewOption.textContent = showingSecondView ? 'Back to player' : 'Switch player view';
+  quickOptions.hidden = true;
+  moreOptionsButton.setAttribute('aria-expanded', 'false');
+});
+document.querySelectorAll('[data-player-action]').forEach(button => {
+  button.addEventListener('click', () => {
+    const action = button.dataset.playerAction;
+    if(action === 'prev') prevBtn.click();
+    if(action === 'replay') replayBtn.click();
+    if(action === 'play') playPauseBtn.click();
+    if(action === 'next') nextBtn.click();
+    if(action === 'shuffle') shuffleBtn.click();
+    if(action === 'loop') loopBtn.click();
+  });
+});
+secondView.addEventListener('click', event => {
+  if(event.target === secondView){
+    secondView.hidden = true;
+    document.querySelector('.bottom-player').hidden = false;
+  }
+});
 chooseCodeOption.addEventListener('click', () => {
   quickOptions.hidden = true;
   moreOptionsButton.setAttribute('aria-expanded', 'false');
@@ -360,6 +392,9 @@ setInterval(()=>{
     progressBar.style.width = pct + '%';
     currentTimeEl.textContent = formatTime(cur);
     durationEl.textContent = formatTime(dur);
+    secondCurrentTime.textContent = formatTime(cur);
+    secondDuration.textContent = formatTime(dur);
+    secondProgressBar.style.width = pct + '%';
   }catch(e){}
 },250);
 
