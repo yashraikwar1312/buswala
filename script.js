@@ -95,7 +95,7 @@ document.head.appendChild(tag);
 function onYouTubeIframeAPIReady(){
   player = new YT.Player('yt-player', {
     height: '1', width: '1',
-    playerVars: {controls:0, disablekb:1, modestbranding:1, rel:0},
+    playerVars: {controls:0, disablekb:1, modestbranding:1, rel:0, playsinline:1},
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange
@@ -146,10 +146,34 @@ function setPlayPauseIcon(isPlaying){
   playPauseBtn.innerHTML = isPlaying ? pauseSvg : playSvg;
 }
 
+function updateMediaSession(){
+  if(!('mediaSession' in navigator) || !('MediaMetadata' in window) || !player) return;
+  const videoData = player.getVideoData && player.getVideoData();
+  const title = videoData && videoData.title ? videoData.title : titleEl.textContent;
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: title || 'Cool Music Player',
+    artist: 'YouTube playlist',
+    album: 'Cool Music Player'
+  });
+}
+
+function setMediaSessionPlaybackState(state){
+  if('mediaSession' in navigator) navigator.mediaSession.playbackState = state;
+}
+
+if('mediaSession' in navigator){
+  navigator.mediaSession.setActionHandler('play', () => player && player.playVideo());
+  navigator.mediaSession.setActionHandler('pause', () => player && player.pauseVideo());
+  navigator.mediaSession.setActionHandler('previoustrack', () => prevBtn.click());
+  navigator.mediaSession.setActionHandler('nexttrack', () => nextBtn.click());
+  navigator.mediaSession.setActionHandler('seekbackward', () => player && player.seekTo(Math.max(0, player.getCurrentTime() - 10), true));
+  navigator.mediaSession.setActionHandler('seekforward', () => player && player.seekTo(player.getCurrentTime() + 10, true));
+}
+
 function onPlayerStateChange(e){
   const YTstate = YT.PlayerState;
-  if(e.data === YTstate.PLAYING){ setPlayPauseIcon(true); }
-  if(e.data === YTstate.PAUSED){ setPlayPauseIcon(false); }
+  if(e.data === YTstate.PLAYING){ setPlayPauseIcon(true); setMediaSessionPlaybackState('playing'); }
+  if(e.data === YTstate.PAUSED){ setPlayPauseIcon(false); setMediaSessionPlaybackState('paused'); }
   if(e.data === YTstate.ENDED){
     const idx = player.getPlaylistIndex();
     const len = playlist.length || 0;
@@ -160,6 +184,7 @@ function onPlayerStateChange(e){
   }
   // update title on state changes
   try{ updateTitle(); }catch(e){}
+  try{ updateMediaSession(); }catch(e){}
   // toggle rotating disk when playing/paused
   try{
     const state = player.getPlayerState();
@@ -174,6 +199,7 @@ function updateTitle(){
   const videoData = player.getVideoData && player.getVideoData();
   const title = (videoData && videoData.title) ? videoData.title : `Video ${idx+1}`;
   titleEl.textContent = title;
+  updateMediaSession();
   // update thumbnail for current video
   try{
     const vid = playlist && playlist.length ? playlist[idx] : null;
