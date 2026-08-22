@@ -55,13 +55,15 @@ body{
   width:22px;
   height:22px;
   border-radius:50%;
-  background:#070b10;
-  border:2px solid rgba(255,255,255,0.9);
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,0.08);
+  background:#070b10 url('playlist-icon/Spotify _ Vintage app, Iphone icon, Screen icon.jpeg') center / cover no-repeat;
+  border:1px solid rgba(255,255,255,0.9);
+  box-shadow:0 2px 8px rgba(0,0,0,0.28);
+  overflow:hidden;
 }
 
 .playlist-icon::before,
 .playlist-icon::after{
+  display:none;
   content:"";
   position:absolute;
   inset:0;
