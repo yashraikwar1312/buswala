@@ -40,6 +40,11 @@ const playlists = {
     id: 'PLnO8uDr9uT6Elyipct9SiAXh2s_SfHshD',
     label: 'Sai Abhyankar'
   },
+  oliviaDean: {
+    id: 'BcQnHzrc24Y',
+    label: 'Olivia Dean',
+    type: 'video'
+  },
   olivia: {
     id: 'PLNE0tq7X_7rNvN1BihL2Dyd5UMJdmxXrV',
     label: 'Olivia Playlist'
