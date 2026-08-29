@@ -81,6 +81,8 @@ const secondProgressBar = document.getElementById('secondProgressBar');
 const secondThumbnail = document.getElementById('secondThumbnail');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const prevBtn = document.getElementById('prevBtn');
+const rewindBtn = document.getElementById('rewindBtn');
+const forwardBtn = document.getElementById('forwardBtn');
 const nextBtn = document.getElementById('nextBtn');
 const shuffleBtn = document.getElementById('shuffleBtn');
 const loopBtn = document.getElementById('loopBtn');
@@ -325,8 +327,10 @@ document.querySelectorAll('[data-player-action]').forEach(button => {
   button.addEventListener('click', () => {
     const action = button.dataset.playerAction;
     if(action === 'prev') prevBtn.click();
+    if(action === 'rewind') rewindBtn.click();
     if(action === 'replay') replayBtn.click();
     if(action === 'play') playPauseBtn.click();
+    if(action === 'forward') forwardBtn.click();
     if(action === 'next') nextBtn.click();
     if(action === 'shuffle') shuffleBtn.click();
     if(action === 'loop') loopBtn.click();
@@ -372,8 +376,19 @@ prevBtn.addEventListener('click', ()=>{
   player.playVideoAt(prev);
 });
 
-replayBtn.addEventListener('click', ()=>{ if(player) player.seekTo(0); });
+function seekBySeconds(deltaSeconds){
+  if(!player) return;
+  try{
+    const currentTime = player.getCurrentTime();
+    const duration = player.getDuration() || 0;
+    const nextTime = Math.min(Math.max(currentTime + deltaSeconds, 0), duration);
+    player.seekTo(nextTime, true);
+  }catch(e){}
+}
 
+rewindBtn.addEventListener('click', ()=> seekBySeconds(-10));
+replayBtn.addEventListener('click', ()=>{ if(player) player.seekTo(0); });
+forwardBtn.addEventListener('click', ()=> seekBySeconds(10));
 nextBtn.addEventListener('click', ()=>{ if(player) player.nextVideo(); });
 
 shuffleBtn.addEventListener('click', ()=>{

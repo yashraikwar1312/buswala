@@ -63,12 +63,14 @@
           <button id="prevBtn" class="control" aria-label="Previous track">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5h2.2v13H6zm11.8 1.3L10.8 12l7 5.2zM9.2 12L18 6.8v10.4z"/></svg>
           </button>
+          <button id="rewindBtn" class="control" aria-label="Go back 10 seconds"><span>-10</span></button>
           <button id="replayBtn" class="control" aria-label="Replay">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5A7.5 7.5 0 1 1 4.5 12h2.2A5.3 5.3 0 1 0 12 6.7v2.2l4-3.2-4-3.1z"/></svg>
           </button>
           <button id="playPauseBtn" class="control large" aria-label="Play or pause">
             <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-play"><path d="M8 6.4v11.2l9.2-5.6z"/></svg>
           </button>
+          <button id="forwardBtn" class="control" aria-label="Go forward 10 seconds"><span>+10</span></button>
           <button id="nextBtn" class="control" aria-label="Next track">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5.5h2.2v13H16zm-11.8 1.3L13.2 12l-9 5.2zM14.8 12L6 6.8v10.4z"/></svg>
           </button>
@@ -105,8 +107,10 @@
       </div>
       <div class="second-controls" aria-label="Player controls">
         <button class="second-control" data-player-action="prev" aria-label="Previous track">|&lt;</button>
+        <button class="second-control" data-player-action="rewind" aria-label="Go back 10 seconds">-10</button>
         <button class="second-control" data-player-action="replay" aria-label="Replay">&#8634;</button>
         <button class="second-control second-play" data-player-action="play" aria-label="Play or pause">&#9654;</button>
+        <button class="second-control" data-player-action="forward" aria-label="Go forward 10 seconds">+10</button>
         <button class="second-control" data-player-action="next" aria-label="Next track">&gt;|</button>
         <button class="second-control" data-player-action="shuffle" aria-label="Shuffle">&#8646;</button>
         <button class="second-control" data-player-action="loop" aria-label="Loop">&#8734;</button>
