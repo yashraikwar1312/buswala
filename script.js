@@ -452,6 +452,236 @@ function formatTime(sec){
 // Expose API callback
 window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
+// ── Bus Quote Ticker ──
+(function(){
+  const quotes = [
+    "कृपया खिड़की से बाहर हाथ या सिर न निकालें",
+    "बुरी नज़र वाले तेरा मुँह काला",
+    "जल्दी का काम शैतान का",
+    "मेरी माँ की दुआ मेरे साथ है",
+    "हॉर्न ओके प्लीज़",
+    "तेरी मेहनत ही तेरी तकदीर है",
+    "दारू पीके गाड़ी मत चलाओ",
+    "जान है तो जहान है",
+    "भगवान भरोसे मत बैठो — वो भी बिज़ी हैं",
+    "सीट बेल्ट लगाओ, ज़िंदगी बचाओ",
+    "यह गाड़ी नहीं, मेरी जान है",
+    "सवारी से प्यार, ड्राइवर का कर्तव्य",
+    "धीरे चलो, घर पहुँचो",
+    "ओवरटेक करने की जल्दी में मत पड़ो",
+    "रोड पर ध्यान, मोबाइल बाद में",
+    "मेरा भारत महान",
+    "जय हो बाबा का",
+    "माँ की दुआ, साथ सदा",
+    "टूटे नहीं ये सपने मेरे",
+    "खाली पेट गाड़ी मत चलाओ",
+    "नींद में मत गाड़ी चलाओ",
+    "फोन बाद में, पहले जान",
+    "आज नहीं तो कल, कल नहीं तो परसों",
+    "दिल्ली अभी दूर है",
+    "मुसाफिर हूँ यारों",
+    "जहाँ चाह वहाँ राह",
+    "कदम कदम बढ़ाए जा",
+    "ये रास्ते पूछते हैं मंज़िल कहाँ है",
+    "घर की याद आए तो मुस्कुराओ",
+    "गाड़ी चलाना ज़िम्मेदारी है",
+    "पहले सुरक्षा, फिर मंज़िल",
+    "यह सफर ज़िंदगी भर याद रहेगा",
+    "हर घड़ी हो ख़याल तेरा",
+    "इस गाड़ी में भगवान का वास है",
+    "शुक्रिया सफर में साथ देने के लिए",
+    "रफ्तार कम, ज़िंदगी लंबी",
+    "जय बजरंग बली",
+    "हर हर महादेव",
+    "वाहे गुरु दा खालसा, वाहे गुरु दी फतेह",
+    "इंशाल्लाह सलामत पहुँचेंगे",
+    "बिस्मिल्लाह",
+    "जय माता दी",
+    "सत श्री अकाल",
+    "जय श्री राम",
+    "भगवान की कृपा से",
+    "नज़र लागे ना किसी की",
+    "जिंदगी एक सफर है सुहाना",
+    "चलते रहो, रुकना मत",
+    "मंज़िल मिलेगी ज़रूर",
+    "हिम्मत रखो, राह मिलेगी",
+    "Buri nazar wale tera muh kala",
+    "Horn OK Please",
+    "Use Dipper at Night",
+    "Keep Distance",
+    "Speed Thrills But Kills",
+    "Life is a Journey, Enjoy the Ride",
+    "My Road, My Rules",
+    "Touch Me Not",
+    "Blow Horn",
+    "Dekh Ke Chalna Bhai",
+    "India is Great",
+    "God is My Co-Pilot",
+    "Drive Like Hell and You Will Be There",
+    "Accident Proof Vehicle",
+    "This Vehicle Runs on Prayers",
+    "No Entry For Evil Eye",
+    "Jai Mata Di",
+    "Safe Drive, Save Life",
+    "Don't Drink and Drive",
+    "Wear Seat Belt",
+    "Keep Your Distance",
+    "Slow Down, Save a Life",
+    "मेरे देश की धरती सोना उगले",
+    "यारों की यारी, जिंदगी से प्यारी",
+    "बस वाला आ रहा है, हट जाओ",
+    "टाइम से चलो, टाइम पर पहुँचो",
+    "ड्राइवर भी इंसान है, उसे भी आराम दो",
+    "ज़िंदगी छोटी है, सफर लंबा",
+    "रात को लाइट जलाओ",
+    "दाएँ मुड़ो, बाएँ मुड़ो, पर सोच-समझकर",
+    "मेरी गाड़ी मेरी जान",
+    "सड़क पर ध्यान दो",
+    "जय हो माँ वैष्णो देवी",
+    "शिरडी वाले साईं बाबा की जय",
+    "तिरुपति बालाजी की जय",
+    "गुरु का आशीर्वाद साथ है",
+    "पेड़ लगाओ, जीवन बचाओ",
+    "हरियाली से है खुशहाली",
+    "सफर में दोस्त बनाओ",
+    "अकेला चना भाड़ नहीं फोड़ता",
+    "एकता में बल है",
+    "सब का साथ, सब का विकास",
+    "वंदे मातरम्",
+    "जय हिंद",
+    "इंकलाब ज़िंदाबाद",
+    "मेरे सपने मेरी मंज़िल",
+    "हार मत मानो, चलते रहो",
+    "समय से चलो, समय पर पहुँचो",
+    "ज़िंदगी में रिस्क लो, पर सड़क पर नहीं",
+    "आगे बढ़ते रहो",
+    "हमसफर मिले तो सफर आसान लगे",
+    "यह बस आपकी अपनी है — संभाल कर रखें"
+  ];
+
+  const el = document.getElementById('busQuoteText');
+  if(!el) return;
+
+  let qi = 0;
+
+  function showQuote(idx){
+    el.classList.add('fade-out');
+    setTimeout(function(){
+      el.textContent = quotes[idx];
+      el.classList.remove('fade-out');
+    }, 420);
+  }
+
+  el.textContent = quotes[0];
+
+  setInterval(function(){
+    qi = (qi + 1) % quotes.length;
+    showQuote(qi);
+  }, 12000);
+})();
+
+// ── Playlist button toggle ──
+(function(){
+  const btn = document.getElementById('playlistToggleBtn');
+  const picker = document.querySelector('.playlist-picker-wrap');
+  if(!btn || !picker) return;
+  btn.addEventListener('click', function(){
+    picker.classList.toggle('playlist-highlight');
+    // scroll the select into view / open it
+    const sel = document.getElementById('playlistSelect');
+    if(sel) sel.focus();
+  });
+})();
+
+// ── Destination Board — 29 States & Districts ──
+(function(){
+  // Each entry: [state abbreviation, [district1, district2, district3, district4, district5]]
+  var stateRoutes = [
+    ['AP', ['VISAKHAPATNAM','VIJAYAWADA','GUNTUR','NELLORE','KURNOOL','TIRUPATI','KADAPA','ANANTAPUR','CHITTOOR','RAJAHMUNDRY','ELURU','MACHILIPATNAM','ONGOLE','HINDUPUR','TADIPATRI']],
+    ['AR', ['ITANAGAR','NAHARLAGUN','PASIGHAT','ZIRO','BOMDILA','TAWANG','ALONG','TEZU','ROING','CHANGLANG','KHONSA','AALO','DAPORIJO','YINGKIONG','NAMSAI']],
+    ['AS', ['GUWAHATI','DIBRUGARH','JORHAT','SILCHAR','NAGAON','TEZPUR','TINSUKIA','BONGAIGAON','SIVASAGAR','DHUBRI','GOALPARA','KARIMGANJ','DIPHU','HAFLONG','MANGALDOI']],
+    ['BR', ['PATNA','GAYA','MUZAFFARPUR','BHAGALPUR','PURNIA','DARBHANGA','ARRAH','BEGUSARAI','KATIHAR','MUNGER','SAMASTIPUR','CHAPRA','SIWAN','MOTIHARI','HAJIPUR']],
+    ['CG', ['RAIPUR','BILASPUR','DURG','KORBA','RAJNANDGAON','JAGDALPUR','AMBIKAPUR','RAIGARH','MAHASAMUND','KAWARDHA','KANKER','KONDAGAON','DHAMTARI','JANJGIR','BEMETARA']],
+    ['GA', ['PANAJI','MARGAO','VASCO','MAPUSA','PONDA','BICHOLIM','SANQUELIM','QUEPEM','CURCHOREM','CANACONA','PERNEM','SANGUEM','CALANGUTE','CANDOLIM','ALDONA']],
+    ['GJ', ['AHMEDABAD','SURAT','VADODARA','RAJKOT','BHAVNAGAR','JAMNAGAR','JUNAGADH','GANDHINAGAR','ANAND','NAVSARI','MEHSANA','PATAN','VALSAD','PORBANDAR','MORBI']],
+    ['HR', ['GURUGRAM','FARIDABAD','AMBALA','HISAR','ROHTAK','KARNAL','PANIPAT','SONIPAT','YAMUNANAGAR','PANCHKULA','SIRSA','BHIWANI','REWARI','JHAJJAR','KAITHAL']],
+    ['HP', ['SHIMLA','MANALI','DHARAMSHALA','SOLAN','MANDI','KULLU','KANGRA','HAMIRPUR','UNA','BILASPUR','CHAMBA','KINNAUR','SIRMAUR','LAHAUL','NAHAN']],
+    ['JH', ['RANCHI','JAMSHEDPUR','DHANBAD','BOKARO','HAZARIBAGH','DEOGHAR','GIRIDIH','DUMKA','PALAMU','CHAIBASA','KODERMA','LOHARDAGA','PAKUR','SAHIBGANJ','RAMGARH']],
+    ['KA', ['BENGALURU','MYSURU','HUBLI','MANGALURU','BELAGAVI','KALABURAGI','DAVANGERE','SHIVAMOGGA','TUMAKURU','BIDAR','RAICHUR','HASSAN','UDUPI','VIJAYAPURA','CHITRADURGA']],
+    ['KL', ['THIRUVANANTHAPURAM','KOCHI','KOZHIKODE','THRISSUR','KANNUR','KOLLAM','PALAKKAD','MALAPPURAM','ALAPPUZHA','KOTTAYAM','PATHANAMTHITTA','IDUKKI','KASARAGOD','WAYANAD','ERNAKULAM']],
+    ['MP', ['BHOPAL','INDORE','JABALPUR','GWALIOR','UJJAIN','SAGAR','REWA','SATNA','DEWAS','CHHINDWARA','RATLAM','SINGRAULI','VIDISHA','SHIVPURI','MANDSAUR']],
+    ['MH', ['MUMBAI','PUNE','NAGPUR','NASHIK','AURANGABAD','SOLAPUR','AMRAVATI','KOLHAPUR','THANE','SANGLI','LATUR','JALGAON','AHMEDNAGAR','NANDED','SATARA']],
+    ['MN', ['IMPHAL','THOUBAL','BISHNUPUR','CHURACHANDPUR','SENAPATI','UKHRUL','CHANDEL','TAMENGLONG','KANGPOKPI','JIRIBAM','NONEY','KAMJONG','PHERZAWL','TENGNOUPAL','KAKCHING']],
+    ['ML', ['SHILLONG','TURA','JOWAI','NONGSTOIN','BAGHMARA','WILLIAMNAGAR','AMPATI','RESUBELPARA','MAIRANG','CHERRAPUNJEE','MAWKYRWAT','KHLIEHRIAT','MAWSYNRAM','SOHRA','NONGPOH']],
+    ['MZ', ['AIZAWL','LUNGLEI','CHAMPHAI','KOLASIB','SERCHHIP','MAMIT','LAWNGTLAI','SAIHA','HNAHTHIAL','KHAWZAWL','SAITUAL','NORTH VANLAIPHAI','THENZAWL','BIATE','BAIRABI']],
+    ['NL', ['KOHIMA','DIMAPUR','MOKOKCHUNG','WOKHA','TUENSANG','MON','ZUNHEBOTO','PHEK','KIPHIRE','LONGLENG','PEREN','NOKLAK','TSEMINYU','SHAMATOR','CHUMOUKEDIMA']],
+    ['OD', ['BHUBANESWAR','CUTTACK','ROURKELA','BERHAMPUR','SAMBALPUR','PURI','BALASORE','BARIPADA','BHADRAK','KORAPUT','BALANGIR','DHENKANAL','KENDRAPARA','PHULBANI','SUNDARGARH']],
+    ['PB', ['LUDHIANA','AMRITSAR','JALANDHAR','PATIALA','BATHINDA','MOHALI','HOSHIARPUR','GURDASPUR','PATHANKOT','FEROZEPUR','MOGA','SANGRUR','KAPURTHALA','FARIDKOT','MUKTSAR']],
+    ['RJ', ['JAIPUR','JODHPUR','KOTA','BIKANER','AJMER','UDAIPUR','BHILWARA','ALWAR','BHARATPUR','SIKAR','TONK','SAWAI MADHOPUR','PALI','NAGAUR','CHURU']],
+    ['SK', ['GANGTOK','NAMCHI','GYALSHING','MANGAN','PAKYONG','SORENG','RONGLI','RAVANGLA','JORETHANG','NAYABAZAR','SINGTAM','RANGPO','MELLI','CHUNGTHANG','LACHUNG']],
+    ['TN', ['CHENNAI','COIMBATORE','MADURAI','TIRUCHIRAPPALLI','SALEM','TIRUNELVELI','ERODE','TIRUPPUR','VELLORE','THANJAVUR','DINDIGUL','VIRUDHUNAGAR','KARUR','NAMAKKAL','NILGIRIS']],
+    ['TG', ['HYDERABAD','WARANGAL','NIZAMABAD','KARIMNAGAR','KHAMMAM','NALGONDA','ADILABAD','SURYAPET','SIDDIPET','MAHBUBNAGAR','MEDAK','RANGAREDDY','JAGTIAL','MANCHERIAL','BHADRADRI']],
+    ['TR', ['AGARTALA','UDAIPUR','DHARMANAGAR','BELONIA','KAILASAHAR','AMBASSA','SABROOM','KHOWAI','KAMALPUR','SONAMURA','MELAGHAR','JIRANIA','BISHALGARH','SANTIRBAZAR','KUMARGHAT']],
+    ['UP', ['LUCKNOW','KANPUR','VARANASI','AGRA','PRAYAGRAJ','MEERUT','GHAZIABAD','NOIDA','BAREILLY','ALIGARH','MORADABAD','SAHARANPUR','GORAKHPUR','FAIZABAD','MATHURA']],
+    ['UK', ['DEHRADUN','HARIDWAR','RISHIKESH','MUSSOORIE','NAINITAL','HALDWANI','ROORKEE','KASHIPUR','ALMORA','RUDRAPUR','KOTDWAR','PITHORAGARH','BAGESHWAR','CHAMOLI','TEHRI']],
+    ['WB', ['KOLKATA','HOWRAH','SILIGURI','DURGAPUR','ASANSOL','BARDHAMAN','MALDA','BARASAT','KRISHNANAGAR','HALDIA','JALPAIGURI','COOCH BEHAR','BANKURA','PURULIA','RAIGANJ']],
+    ['DL', ['NEW DELHI','SOUTH DELHI','EAST DELHI','NORTH DELHI','WEST DELHI','DWARKA','ROHINI','SHAHDARA','MEHRAULI','NARELA','NAJAFGARH','ALIPUR','DEFENCE COLONY','LAJPAT NAGAR','KAROL BAGH']],
+  ];
+
+  // Build flat list of routes (4 stops each, sliding window within each state)
+  var routes = [];
+  stateRoutes.forEach(function(entry){
+    var abbr = entry[0];
+    var districts = entry[1];
+    for(var i = 0; i <= districts.length - 4; i++){
+      routes.push({ stops: districts.slice(i, i + 4), state: abbr });
+    }
+  });
+
+  // Shuffle for variety
+  for(var i = routes.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = routes[i]; routes[i] = routes[j]; routes[j] = tmp;
+  }
+
+  var el = document.getElementById('busBoardRoute');
+  if(!el) return;
+
+  var current = 0;
+
+  function renderRoute(route){
+    el.innerHTML = '';
+    route.stops.forEach(function(stop, i){
+      var s = document.createElement('span');
+      s.className = 'stop';
+      s.textContent = stop;
+      el.appendChild(s);
+      if(i < route.stops.length - 1){
+        var a = document.createElement('span');
+        a.className = 'arrow';
+        a.textContent = '→';
+        el.appendChild(a);
+      }
+    });
+    var tag = document.createElement('span');
+    tag.className = 'state-tag';
+    tag.textContent = '| ' + route.state;
+    el.appendChild(tag);
+  }
+
+  function cycleBoard(){
+    el.classList.add('fade-out');
+    setTimeout(function(){
+      current = (current + 1) % routes.length;
+      renderRoute(routes[current]);
+      el.classList.remove('fade-out');
+    }, 400);
+  }
+
+  renderRoute(routes[0]);
+  setInterval(cycleBoard, 4000);
+})();
+
 // Platform detection and body class for responsive sizing
 function detectPlatformClass(){
   const ua = navigator.userAgent || navigator.vendor || window.opera || '';

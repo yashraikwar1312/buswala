@@ -196,11 +196,11 @@ body{
   0%, 100% { transform:translateY(0px); }
   50% { transform:translateY(-6px); }
 }
-.center-title{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);font-weight:900;color:#ffffff;z-index:2;pointer-events:none;text-align:center;text-shadow:0 3px 0 rgba(0,0,0,0.35),0 12px 40px rgba(0,0,0,0.7);font-size:clamp(52px,8vw,112px);line-height:0.9;animation:float 5s ease-in-out infinite}
+.center-title{position:fixed;left:50%;top:20%;transform:translate(-50%,-50%);font-weight:900;color:#ffffff;z-index:2;pointer-events:none;text-align:center;text-shadow:0 3px 0 rgba(0,0,0,0.35),0 12px 40px rgba(0,0,0,0.7);font-size:clamp(72px,10vw,130px);line-height:0.9;animation:float 5s ease-in-out infinite;white-space:nowrap}
 
 @keyframes float{
   0%{transform:translate(-50%,-54%) scale(1)}
-  50%{transform:translate(-50%,-46%) scale(1.035)}
+  50%{transform:translate(-50%,-46%) scale(1.03)}
   100%{transform:translate(-50%,-54%) scale(1)}
 }
 .stage{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:80px 20px}
@@ -315,8 +315,8 @@ body{
 }
 
 /* bottom player bar */
-.bottom-player{position:fixed;left:12px;right:12px;bottom:18px;display:flex;justify-content:center;z-index:40}
-.bottom-player .player-card{width:100%;max-width:980px}
+.bottom-player{position:fixed;left:12px;right:12px;bottom:18px;display:flex;flex-direction:column;align-items:center;z-index:40}
+.bottom-player .player-card{width:100%;max-width:980px;border-radius:0 0 18px 18px}
 
 /* platform-based sizing via CSS variable */
 :root{--player-scale:1}
@@ -327,6 +327,139 @@ body.platform-mac{--player-scale:1.05}
 body.platform-linux{--player-scale:1}
 
 .bottom-player .player-card{transform:scale(var(--player-scale));}
+
+/* ── Bus Quote Ticker ── */
+.bus-quotes-bar{
+  width:100%;
+  max-width:980px;
+  padding:7px 18px;
+  text-align:center;
+  background:rgba(0,0,0,0.38);
+  border-radius:14px 14px 0 0;
+  border:1px solid rgba(255,255,255,0.1);
+  border-bottom:none;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  overflow:hidden;
+  min-height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.bus-quote-text{
+  font-family:Poppins,sans-serif;
+  font-size:clamp(11px,1.5vw,14px);
+  font-weight:500;
+  color:rgba(255,255,255,0.88);
+  letter-spacing:0.01em;
+  transition:opacity .4s ease, transform .4s ease;
+  text-shadow:0 1px 6px rgba(0,0,0,0.6);
+  display:block;
+  text-align:center;
+}
+.bus-quote-text.fade-out{
+  opacity:0;
+  transform:translateY(-4px);
+}
+
+/* ── Playlist button in player card ── */
+.meta-top-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.meta-top-row .track-title{
+  flex:1;
+  min-width:0;
+}
+.playlist-toggle-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:5px 11px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  font:600 11px Poppins,sans-serif;
+  cursor:pointer;
+  white-space:nowrap;
+  flex-shrink:0;
+  transition:background .15s ease, transform .15s ease;
+}
+.playlist-toggle-btn svg{
+  width:14px;height:14px;fill:currentColor;flex-shrink:0;
+}
+.playlist-toggle-btn:hover{
+  background:rgba(255,255,255,0.22);
+  transform:translateY(-1px);
+}
+
+/* ── Slim Destination Board ── */
+.dest-board{
+  position:fixed;
+  left:50%;
+  top:calc(20% + clamp(52px,7vw,80px));
+  transform:translateX(-50%);
+  z-index:10;
+  width:min(92vw,820px);
+  border-radius:3px;
+  overflow:hidden;
+  animation:board-bob 6s ease-in-out infinite;
+  /* weathered wood/metal texture */
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.015) 0px,
+      rgba(255,255,255,0.015) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    linear-gradient(180deg,#2a1a07 0%,#1a0e03 45%,#221508 100%);
+  border-top:1px solid rgba(180,120,30,.35);
+  border-bottom:1px solid rgba(0,0,0,.7);
+  box-shadow:0 4px 18px rgba(0,0,0,.65), 0 1px 0 rgba(255,200,60,.08);
+}
+
+.dest-board-route{
+  padding:9px 20px 8px;
+  font-family:"Courier New","Lucida Console",monospace;
+  font-size:clamp(13px,2.1vw,19px);
+  font-weight:700;
+  letter-spacing:.13em;
+  color:#f5c842;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-shadow:0 0 9px rgba(245,200,66,.7),0 0 20px rgba(245,200,66,.22);
+  transition:opacity .38s ease,transform .38s ease;
+  line-height:1.25;
+}
+.dest-board-route.fade-out{
+  opacity:0;
+  transform:translateY(-4px);
+}
+.dest-board-route .stop{ letter-spacing:.13em }
+.dest-board-route .arrow{ color:rgba(245,200,66,.48); margin:0 4px; font-size:.9em }
+.dest-board-route .state-tag{
+  color:rgba(245,200,66,.38);
+  font-size:.72em;
+  letter-spacing:.2em;
+  margin-left:10px;
+  text-shadow:none;
+}
+
+@keyframes board-bob{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(-3px)}
+}
+
+@media(max-width:700px){
+  .dest-board{top:calc(20% + clamp(52px,10vw,80px));width:min(96vw,500px)}
+  .dest-board-route{padding:8px 14px 7px;font-size:clamp(11px,3.2vw,15px)}
+}
+/* ── end dest board ── */
 
 @media (max-width:480px){
   .bottom-player{left:8px;right:8px;bottom:12px}
